@@ -15,12 +15,12 @@ export class Kernel {
   public static providers = [
     BootstrapProvider,
     CacheProvider,
-    KafkaProvider,
-    JobsProvider,
+    // KafkaProvider,
+    // JobsProvider,
     // TypeORMProvider,
     HttpProvider,
     // GraphqlProvider,
-    // MongodbProvider,
+    MongodbProvider,
     // SocketProvider,
   ];
 }
