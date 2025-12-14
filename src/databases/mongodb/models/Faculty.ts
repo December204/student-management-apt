@@ -7,23 +7,23 @@ import { Exclude } from 'class-transformer';
   schemaOptions: {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-    collection: 'configs',
+    collection: 'faculties',
     timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' },
   },
   options: {
     allowMixed: Severity.ALLOW,
   },
 })
-export class Student {
+export class Faculty {
   _id: ObjectId;
 
   @IsString()
   @Property({ required: true })
-  name: string;
+  facultyName: string;
 
   @IsString()
   @Property({ required: true, unique: true })
-  studentCode: string;
+  facultyCode: string;
 
   @Exclude()
   @Property({ default: new Date(), required: true })
@@ -32,7 +32,4 @@ export class Student {
   @Exclude()
   @Property({ default: new Date(), required: true })
   updatedAt: Date;
-  @IsString()
-  @Property({ required : false })
-  dob : Date;
 }

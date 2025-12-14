@@ -27,4 +27,21 @@ export class StudentRepository {
       studentCode: code,
     });
   }
+  async updateById(id: string, patch: Partial<Student>) {
+    return StudentModel.findByIdAndUpdate(
+      id,
+      { $set: patch },
+      { new: true, runValidators: true },
+    ).exec();
+  }
+  async deleteById(id: string) {
+    return StudentModel.findByIdAndDelete(id);
+  }
+  async updateFullById(id: string, full: Student) {
+    return StudentModel.findByIdAndUpdate(
+      id,
+      { $set: full },
+      { new: true, runValidators: true },
+    ).exec();
+  }
 }

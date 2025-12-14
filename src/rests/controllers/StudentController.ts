@@ -1,6 +1,6 @@
 import { timingSafeEqual } from 'crypto';
 
-import { Body, Get, HttpCode, JsonController, Param, Post } from 'routing-controllers';
+import { Body, Delete, Get, HttpCode, JsonController, Param, Patch, Post, Put } from 'routing-controllers';
 import { Service } from 'typedi';
 import winston from 'winston';
 import { ResponseSchema } from 'routing-controllers-openapi';
@@ -39,5 +39,31 @@ export class StudentController {
     this.logger.info(`getStudentByCode : `, code);
     const student = await this.studentService.getStudentByCode(code);
     return student;
+  }
+  @Patch('/:id')
+  @ResponseSchema(Student, { statusCode:200 })
+  async updateStudentById (@Param('id') id: string, @Body() body: Partial<CreateStudentReq>) {
+    this.logger.info(`UpdateStudentById: `, id, body);
+    const newStudent = await this.studentService.updateStudent(id, body);
+    return newStudent;
+  }
+
+  @Put('/:id')
+  @ResponseSchema(Student, { statusCode:200 })
+  async updateFullStudentById(@Param('id') id: string, @Body() body: CreateStudentReq) {
+    this.logger.info(`updateFullStudentById: `, id, body);
+    const student = new Student();
+    student.name = body.name;
+    student.studentCode = body.code;
+    student.dob = body.dob;
+    const updatedStudent = await this.studentService.updateFullStudent(id, student);
+    return updatedStudent;
+  }
+
+  @Delete('/:id')
+  @ResponseSchema(Student, { statusCode:200 })
+  async deleteStudentById(@Param('id') id: string) {
+    this.logger.info(`deleteStudentById: `, id);
+    await this.studentService.deleteStudent(id);
   }
 }

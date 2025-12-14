@@ -1,0 +1,33 @@
+students 
+id:ObjectId
+studentCode 
+dob 
+class_id
+
+courses
+id:ObjectId
+courseName 
+credits 
+
+
+faculty
+id
+facultyName
+
+
+classes
+id
+className
+faculty_id
+
+enrollment
+id
+semester
+grades
+student_id
+course_id
+
+st -> enrollment (1->n)
+classes -> students (1->n)
+faculties -> classes (1->n)
+courses ->enrollments(1->n)

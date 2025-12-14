@@ -1,29 +1,33 @@
 import { ObjectId } from 'mongodb';
 import { prop as Property, modelOptions, Severity } from '@typegoose/typegoose';
-import { IsString } from 'class-validator';
+import { IsString, IsNumber } from 'class-validator';
 import { Exclude } from 'class-transformer';
 
 @modelOptions({
   schemaOptions: {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-    collection: 'configs',
+    collection: 'courses',
     timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' },
   },
   options: {
     allowMixed: Severity.ALLOW,
   },
 })
-export class Student {
+export class Course {
   _id: ObjectId;
 
   @IsString()
   @Property({ required: true })
-  name: string;
+  courseName: string;
 
   @IsString()
   @Property({ required: true, unique: true })
-  studentCode: string;
+  courseCode: string;
+
+  @IsNumber()
+  @Property({ required: true })
+  credits: number;
 
   @Exclude()
   @Property({ default: new Date(), required: true })
@@ -32,7 +36,4 @@ export class Student {
   @Exclude()
   @Property({ default: new Date(), required: true })
   updatedAt: Date;
-  @IsString()
-  @Property({ required : false })
-  dob : Date;
 }
