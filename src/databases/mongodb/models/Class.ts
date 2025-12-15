@@ -33,11 +33,9 @@ export class Class {
   @Property({ required: true, unique: true })
   classCode: string;
 
-  /** Lớp này thuộc môn học nào */
   @Property({ ref: () => Course, required: true })
   course: Ref<Course>;
 
-  /** Giảng viên / khoa phụ trách */
   @Property({ ref: () => Faculty, required: true })
   faculty: Ref<Faculty>;
 

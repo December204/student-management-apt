@@ -66,4 +66,10 @@ export class StudentController {
     this.logger.info(`deleteStudentById: `, id);
     await this.studentService.deleteStudent(id);
   }
+  @Get('/')
+  @ResponseSchema(Student, { isArray: true })
+  async getAll() {
+    const students = await this.studentService.getAll();
+    return students.map(s => s.toJSON());
+  }
 }

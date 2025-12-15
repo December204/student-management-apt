@@ -29,4 +29,7 @@ export class StudentService {
   async updateFullStudent(id: string, full: Student) {
     return this.studentRepo.updateFullById(id, full);
   }
+  async getAll() {
+    return this.studentRepo.findAll();
+  }
 }

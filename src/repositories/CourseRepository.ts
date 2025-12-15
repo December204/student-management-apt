@@ -12,19 +12,19 @@ export class CourseRepository {
     @Logger(module) private logger: winston.Logger,
   ) {}
 
-  findById(id: string) {
+  async findById(id: string) {
     return CourseModel.findById(id);
   }
 
-  findByCode(code: string) {
+  async findByCode(code: string) {
     return CourseModel.findOne({ courseCode: code });
   }
 
-  insert(course: Course) {
+  async insert(course: Course) {
     return CourseModel.create(course);
   }
 
-  updateById(id: string, patch: Partial<Course>) {
+  async updateById(id: string, patch: Partial<Course>) {
     return CourseModel.findByIdAndUpdate(
       id,
       { $set: patch },

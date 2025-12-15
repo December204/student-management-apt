@@ -44,4 +44,7 @@ export class StudentRepository {
       { new: true, runValidators: true },
     ).exec();
   }
+  async findAll() {
+    return StudentModel.find();
+  }
 }

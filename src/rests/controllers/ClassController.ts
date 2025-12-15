@@ -23,33 +23,44 @@ export class ClassController {
 
   @Post('/')
   @ResponseSchema(Class, { statusCode: 201 })
-  create(@Body() body: CreateClassReq) {
+  async create(@Body() body: CreateClassReq) {
     const cls = new Class();
     cls.className = body.className;
     cls.classCode = body.classCode;
-    cls.course = body.courseId as any;
+    cls.course = body.courseId as any ;
     cls.faculty = body.facultyId as any;
     cls.semester = body.semester;
-    return this.classService.create(cls);
+    return await this.classService.create(cls);
   }
 
-  @Get('/course/:courseId')
-  getByCourse(@Param('courseId') courseId: string) {
-    return this.classService.getByCourseId(courseId);
+  @Get('/:courseId')
+  @ResponseSchema(Class, { statusCode: 200 })
+  async getByCourse(@Param('courseId') courseId: string) {
+    return await this.classService.getByCourseId(courseId);
   }
 
-  @Get('/faculty/:facultyId')
-  getByFaculty(@Param('facultyId') facultyId: string) {
-    return this.classService.getByFacultyId(facultyId);
+  @Get('/:facultyId')
+  @ResponseSchema(Class, { statusCode: 200 })
+  async getByFaculty(@Param('facultyId') facultyId: string) {
+    return await this.classService.getByFacultyId(facultyId);
   }
 
   @Patch('/:id')
-  update(@Param('id') id: string, @Body() body: Partial<CreateClassReq>) {
+  @ResponseSchema(Class, { statusCode: 200 })
+  async update(@Param('id') id: string, @Body() body: Partial<CreateClassReq>) {
     return this.classService.update(id, body);
   }
 
   @Delete('/:id')
-  delete(@Param('id') id: string) {
-    return this.classService.delete(id);
+  @ResponseSchema(Class, { statusCode: 200 })
+  async delete(@Param('id') id: string) {
+    return await this.classService.delete(id);
+  }
+  @Get('/:code')
+  @ResponseSchema(Class, { statusCode: 200 })
+  async getStudentByCode(@Param('code') code: string) {
+    this.logger.info(`getStudentByCode : `, code);
+    const student = await this.classService.getClassByCode(code);
+    return student;
   }
 }

@@ -10,29 +10,23 @@ import { Class } from '@Models/Class';
 export class ClassRepository {
   constructor(@Logger(module) private logger: winston.Logger) {}
 
-  findById(id: string) {
-    return ClassModel.findById(id)
-      .populate(['course', 'faculty'])
-      .exec();
-  }
-
-  findByCourseId(courseId: string) {
+  async findByCourseId(courseId: string) {
     return ClassModel.find({ course: courseId })
-      .populate(['course', 'faculty'])
+      .populate('course')
       .exec();
   }
 
-  findByFacultyId(facultyId: string) {
+  async findByFacultyId(facultyId: string) {
     return ClassModel.find({ faculty: facultyId })
-      .populate(['course', 'faculty'])
+      .populate('faculty')
       .exec();
   }
 
-  insert(cls: Class) {
+  async insert(cls: Class) {
     return ClassModel.create(cls);
   }
 
-  updateById(id: string, patch: Partial<Class>) {
+  async updateById(id: string, patch: Partial<Class>) {
     return ClassModel.findByIdAndUpdate(
       id,
       { $set: patch },
@@ -40,7 +34,13 @@ export class ClassRepository {
     ).exec();
   }
 
-  deleteById(id: string) {
+  async deleteById(id: string) {
     return ClassModel.findByIdAndDelete(id).exec();
+  }
+  async findByCode(code: string) {
+    this.logger.info('findByCode code: ', code);
+    return ClassModel.findOne({
+      classCode: code,
+    });
   }
 }
